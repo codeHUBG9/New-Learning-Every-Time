@@ -1,0 +1,87 @@
+<html>
+<head>
+    <title>iisnode logs</title>
+    <style type="text/css">
+        body
+        {
+            font-family: "Trebuchet MS" , Arial, Helvetica, sans-serif;
+        }
+        table
+        {
+            border-collapse: collapse;
+        }
+        td, th
+        {
+            border: 1px solid lightgray;
+            padding: 3px 7px 2px 7px;
+        }
+        th
+        {
+            text-align: left;
+            padding-top: 5px;
+            padding-bottom: 4px;
+            background-color: Gray;
+            color: #ffffff;
+        }
+        td.stderr
+        {
+            color: Red;
+        }
+    </style>
+</head>
+<body>
+    <table id="logFilesTable">
+        <tr>
+            <th>
+                Computer name
+            </th>
+            <th>
+                PID
+            </th>
+            <th>
+                Type
+            </th>
+            <th>
+                Created
+            </th>
+            <th>
+                Link
+            </th>
+        </tr>
+    </table>
+    <p id="lastUpdated"></p>
+    <script type="text/javascript">
+
+        // this is replaced with actual data at runtime by code in interceptor.js
+        var logFiles = [{"file":"VIVEK-YADAV-12080-stderr-1689308069049.txt","computername":"VIVEK-YADAV","pid":12080,"type":"stderr","created":1689308069049},{"file":"VIVEK-YADAV-12080-stdout-1689308069047.txt","computername":"VIVEK-YADAV","pid":12080,"type":"stdout","created":1689308069047},{"file":"VIVEK-YADAV-21732-stderr-1689273159431.txt","computername":"VIVEK-YADAV","pid":21732,"type":"stderr","created":1689273159431},{"file":"VIVEK-YADAV-21732-stdout-1689273159431.txt","computername":"VIVEK-YADAV","pid":21732,"type":"stdout","created":1689273159431},{"file":"VIVEK-YADAV-8696-stderr-1689306929587.txt","computername":"VIVEK-YADAV","pid":8696,"type":"stderr","created":1689306929587},{"file":"VIVEK-YADAV-8696-stdout-1689306929586.txt","computername":"VIVEK-YADAV","pid":8696,"type":"stdout","created":1689306929586},{"file":"VIVEK-YADAV-9844-stderr-1689273042141.txt","computername":"VIVEK-YADAV","pid":9844,"type":"stderr","created":1689273042141},{"file":"VIVEK-YADAV-9844-stdout-1689273042141.txt","computername":"VIVEK-YADAV","pid":9844,"type":"stdout","created":1689273042141}];
+        var lastUpdated = 1689308069548;
+        var date = new Date();
+
+        date.setTime(lastUpdated);
+        document.getElementById('lastUpdated').innerHTML = 'Index was last updated ' + date;
+
+        logFiles.sort(function (a, b) {
+            return b.created - a.created;
+        });
+
+        var logFilesTable = document.getElementById("logFilesTable");
+        for (var i = 0; i < logFiles.length; i++) {
+            var logFile = logFiles[i];
+            date.setTime(logFile.created);
+            var row = logFilesTable.insertRow(-1);
+            var computerNameCell = row.insertCell(0);
+            var pidCell = row.insertCell(1);
+            var typeCell = row.insertCell(2);
+            var dateCell = row.insertCell(3);
+            var logCell = row.insertCell(4);
+            computerNameCell.innerHTML = logFile.computername;
+            pidCell.innerHTML = logFile.pid.toString();
+            typeCell.innerHTML = logFile.type;
+            typeCell.setAttribute('class', logFile.type);
+            dateCell.innerHTML = date.toString();
+            logCell.innerHTML = '<a href="' + logFile.file + '">log</a>';
+        };
+
+    </script>
+</body>
+</html>
